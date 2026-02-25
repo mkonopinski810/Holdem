@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NL Hold'em</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======== Start Screen ======== -->
+  <div id="start-screen">
+    <h1>NL Hold'em</h1>
+    <p>No Limit Texas Hold'em vs AI</p>
+    <div class="start-options">
+      <label for="player-count">Players</label>
+      <select id="player-count">
+        <option value="2">2 (Heads Up)</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6" selected>6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10 (Full Ring)</option>
+      </select>
+      <button id="start-game-btn" class="btn-primary">Play</button>
+    </div>
+  </div>
+
+  <!-- ======== Game Screen ======== -->
+  <div id="game-screen" class="hidden">
+
+    <!-- Top Bar: stats, speed -->
+    <div class="top-bar">
+      <h2>NL Hold'em</h2>
+      <div id="stats-display"></div>
+      <div class="top-controls">
+        <label for="speed-select">Speed</label>
+        <select id="speed-select">
+          <option value="0">Instant</option>
+          <option value="1" selected>Normal</option>
+          <option value="2">Slow</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-area">
+      <div id="poker-table">
+        <div id="player-slots"></div>
+        <div id="phase-display"></div>
+        <div id="pot-display">Pot: 0</div>
+        <div id="community-cards"></div>
+        <div id="hand-result" class="hidden"></div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div id="controls" class="controls-panel disabled">
+      <div class="action-buttons">
+        <button id="fold-btn" class="action-btn">Fold</button>
+        <button id="check-btn" class="action-btn">Check</button>
+        <button id="call-btn" class="action-btn hidden">Call</button>
+        <button id="raise-btn" class="action-btn">Raise</button>
+      </div>
+      <div class="raise-controls">
+        <div class="raise-slider-wrap">
+          <input type="range" id="raise-slider" min="4" max="200" value="4">
+          <span id="raise-value">4</span>
+        </div>
+        <div class="preset-buttons">
+          <button class="preset-btn" data-preset="half">&frac12; Pot</button>
+          <button class="preset-btn" data-preset="pot">Pot</button>
+          <button class="preset-btn" data-preset="2x">2x Pot</button>
+          <button class="preset-btn" data-preset="allin">All-In</button>
+        </div>
+      </div>
+      <div class="new-hand-wrap">
+        <button id="new-hand-btn">New Hand</button>
+        <div class="keyboard-hints">
+          <kbd>F</kbd> Fold &nbsp; <kbd>C</kbd> Check/Call &nbsp; <kbd>R</kbd> Raise
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="sidebar">
+      <h3>Leaderboard</h3>
+      <table class="leaderboard-table">
+        <thead><tr><th>#</th><th>Date</th><th>Profit</th></tr></thead>
+        <tbody id="leaderboard-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+  <script src="ai.js"></script>
+  <script src="ui.js"></script>
+  <script>
+    const game = new Game();
+    const ui = new UI(game);
+  </script>
+</body>
+</html>
