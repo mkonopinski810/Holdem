@@ -280,11 +280,14 @@ class Game {
     this.minRaise = this.bigBlind;
     this.lastRaise = 0;
 
-    // Reset players, give them 200 chips
+    // Reset per-hand state; rebuy anyone who busted
     for (const p of this.players) {
       p.reset();
-      p.chips = 200;
+      if (p.chips <= 0) p.chips = 200;
     }
+
+    // Track starting stack for profit calc
+    this.humanStartStack = this.players[0].chips;
 
     // Move dealer
     this.dealerIndex = (this.dealerIndex) % this.players.length;
@@ -532,7 +535,7 @@ class Game {
   finishHand(winners, ranked) {
     const humanPlayer = this.players[0];
     const humanWon = winners.some(w => w.id === 0);
-    const profit = humanPlayer.chips - 200;
+    const profit = humanPlayer.chips - (this.humanStartStack || 200);
 
     this.stats.handsPlayed++;
     if (humanWon) this.stats.handsWon++;
